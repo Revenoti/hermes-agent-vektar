@@ -17,4 +17,10 @@ fi
 
 hermes dashboard --host 127.0.0.1 --port 9119 --no-open &
 
+echo "Waiting for dashboard to be ready on port 9119..."
+until bash -c 'echo > /dev/tcp/127.0.0.1/9119' 2>/dev/null; do
+  sleep 0.5
+done
+echo "Dashboard is ready."
+
 exec python /auth_proxy.py
